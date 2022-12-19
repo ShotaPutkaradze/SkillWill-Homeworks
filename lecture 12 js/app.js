@@ -14,6 +14,7 @@ pipe(
 );
 
 // 2 ----------------------------------------------
+
 async function getUsers() {
   const posts = await fetch("https://jsonplaceholder.typicode.com/posts")
     .then((response) => response.json())
@@ -31,6 +32,11 @@ const testObj = {
   obj: {
     str2: "react",
     num2: 2,
+    obj2: {
+      str3: "css",
+      num3: 3,
+      arr2: [9, 3, 7, "html"],
+    },
   },
   arr1: [{ str4: "abc" }, 6, "test"],
 };
@@ -62,3 +68,5 @@ function deepCopy(obj) {
 deepCopy(testObj)
   .then((response) => response)
   .then((data) => console.log(data));
+
+console.log(testObj);
