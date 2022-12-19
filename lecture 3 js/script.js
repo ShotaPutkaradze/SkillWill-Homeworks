@@ -38,6 +38,8 @@ function newObj(user) {
   for (let fieldName in user) {
     if (typeof user[fieldName] === "object") {
       newUser[fieldName] = newObj(user[fieldName]);
+    } else if (Array.isArray(user[fieldName]) === "Array") {
+      newUser[fieldName] = newObj[user[fieldName]];
     } else {
       newUser[fieldName] = user[fieldName];
     }
