@@ -2,36 +2,51 @@ import React, { Component } from "react";
 import "./App.css";
 import AddItem from "./components/AddItem";
 import ToDoList from "./components/ToDoList";
+import DoneList from "./components/DoneList";
 
 class App extends Component {
   state = {
     value: "",
-    tasks: [],
+    tasksTodo: [],
+    tasksDone: [],
   };
 
-  onChange = (event) => {
+  onChangeHandler = (event) => {
     this.setState({
       value: event.target.value,
     });
   };
 
-  onDeleteClick = (index) => {
-    const tmpArray = [...this.state.tasks];
-    tmpArray.splice(index, 1);
-    this.setState({
-      tasks: [...tmpArray],
-    });
-  };
-
-  onAddClick = (event) => {
+  onAddClickHandler = (event) => {
     event.preventDefault();
     if (this.state.value) {
       this.setState({
         value: "",
-        tasks: [...this.state.tasks, { task: this.state.value, done: false }],
+        tasksTodo: [...this.state.tasksTodo, { task: this.state.value, done: false }],
       });
     } else {
-      alert("please white task");
+      alert("Please Write Task");
+    }
+  };
+
+  onClickHandler = (event, index) => {
+    event.preventDefault();
+
+    if (event.target.innerText === "delete") {
+      const tmpTodo = [...this.state.tasksTodo];
+      tmpTodo.splice(index, 1);
+      this.setState({
+        tasksTodo: [...tmpTodo],
+      });
+    } else if (event.target.innerText === "done") {
+      const tmpTodo = [...this.state.tasksTodo];
+      tmpTodo[index].done = true;
+      const tmpDone = [...this.state.tasksDone];
+      tmpDone.unshift(tmpTodo.splice(index, 1)[0]);
+      this.setState({
+        tasksTodo: [...tmpTodo],
+        tasksDone: [...tmpDone],
+      });
     }
   };
 
@@ -39,21 +54,28 @@ class App extends Component {
     return (
       <div className="App">
         <header className="header">To Do APP</header>
-        {this.state.tasks.map((task, index) => {
-          return (
-            <ToDoList
-              task={task.task}
-              key={index}
-              onClick={() => this.onDeleteClick(index)}
+        <div className="main_container">
+          <div className="todo_container">
+            {this.state.tasksTodo.map((task, index) => (
+              <ToDoList
+                task={task.task}
+                key={index}
+                onClick={(event) => this.onClickHandler(event, index)}
+              />
+            ))}
+            <AddItem
+              value={this.state.value}
+              onClick={(event) => this.onAddClickHandler(event)}
+              onChange={(event) => this.onChangeHandler(event)}
             />
-          );
-        })}
+          </div>
 
-        <AddItem
-          value={this.state.value}
-          onClick={(event) => this.onAddClick(event)}
-          onChange={(event) => this.onChange(event)}
-        />
+          <div className="done_container">
+            {this.state.tasksDone.map((task, index) => (
+              <DoneList key={index} tasks={task.task} />
+            ))}
+          </div>
+        </div>
       </div>
     );
   }

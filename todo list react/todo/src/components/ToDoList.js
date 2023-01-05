@@ -3,13 +3,13 @@ import "./ToDoList.css";
 class ToDoList extends Component {
   render() {
     return (
-      <div className="task_form">
+      <div className="todo_form">
         <h4 className="h4">{this.props.task}</h4>
         <div className="buttons_div">
           <button type="submit" className="button" onClick={this.props.onClick}>
             delete
           </button>
-          <button type="submit" className="button">
+          <button type="submit" className="button" onClick={this.props.onClick}>
             done
           </button>
         </div>
