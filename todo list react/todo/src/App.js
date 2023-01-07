@@ -27,27 +27,28 @@ class App extends Component {
     } else {
       alert("Please Write Task");
     }
+    console.log(event);
   };
 
-  onClickHandler = (event, index) => {
+  onDeleteClickHandler = (event, index) => {
     event.preventDefault();
+    const tmpTodo = [...this.state.tasksTodo];
+    tmpTodo.splice(index, 1);
+    this.setState({
+      tasksTodo: [...tmpTodo],
+    });
+  };
 
-    if (event.target.innerText === "delete") {
-      const tmpTodo = [...this.state.tasksTodo];
-      tmpTodo.splice(index, 1);
-      this.setState({
-        tasksTodo: [...tmpTodo],
-      });
-    } else if (event.target.innerText === "done") {
-      const tmpTodo = [...this.state.tasksTodo];
-      tmpTodo[index].done = true;
-      const tmpDone = [...this.state.tasksDone];
-      tmpDone.unshift(tmpTodo.splice(index, 1)[0]);
-      this.setState({
-        tasksTodo: [...tmpTodo],
-        tasksDone: [...tmpDone],
-      });
-    }
+  onDoneClickHandler = (event, index) => {
+    event.preventDefault();
+    const tmpTodo = [...this.state.tasksTodo];
+    tmpTodo[index].done = true;
+    const tmpDone = [...this.state.tasksDone];
+    tmpDone.unshift(tmpTodo.splice(index, 1)[0]);
+    this.setState({
+      tasksTodo: [...tmpTodo],
+      tasksDone: [...tmpDone],
+    });
   };
 
   render() {
@@ -56,18 +57,19 @@ class App extends Component {
         <header className="header">To Do APP</header>
         <div className="main_container">
           <div className="todo_container">
-            {this.state.tasksTodo.map((task, index) => (
-              <ToDoList
-                task={task.task}
-                key={index}
-                onClick={(event) => this.onClickHandler(event, index)}
-              />
-            ))}
             <AddItem
               value={this.state.value}
               onClick={(event) => this.onAddClickHandler(event)}
               onChange={(event) => this.onChangeHandler(event)}
             />
+            {this.state.tasksTodo.map((task, index) => (
+              <ToDoList
+                task={task.task}
+                key={index}
+                onDeleteClick={(event) => this.onDeleteClickHandler(event, index)}
+                onDoneCLick={(event) => this.onDoneClickHandler(event, index)}
+              />
+            ))}
           </div>
 
           <div className="done_container">
