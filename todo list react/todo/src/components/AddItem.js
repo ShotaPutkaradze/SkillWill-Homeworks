@@ -3,7 +3,6 @@ import "./AddItem.css";
 
 class AddItem extends PureComponent {
   render() {
-    console.log("addItem Component");
     const { value, onChange, onClick } = this.props;
     return (
       <form className="form">

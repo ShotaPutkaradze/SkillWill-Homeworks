@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import "./ToDoList.css";
 class ToDoList extends PureComponent {
   render() {
-    console.log("TodoList Component");
     const { task, onDeleteClick, onDoneCLick, index } = this.props;
     return (
       <div className="todo_form">
