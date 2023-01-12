@@ -1,19 +1,21 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./AddItem.css";
 
-class AddItem extends Component {
+class AddItem extends PureComponent {
   render() {
+    console.log("addItem Component");
+    const { value, onChange, onClick } = this.props;
     return (
       <form className="form">
         <textarea
           type="text"
           className="task_textarea"
           placeholder="Write Your Task..."
-          value={this.props.value}
-          onChange={this.props.onChange}
+          value={value}
+          onChange={(event) => onChange(event)}
         ></textarea>
 
-        <button type="submit" className="button" onClick={this.props.onClick}>
+        <button type="submit" className="button" onClick={(event) => onClick(event)}>
           add
         </button>
       </form>

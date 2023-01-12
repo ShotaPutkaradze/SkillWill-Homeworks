@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import "./DoneList.css";
 
-class DoneList extends Component {
+class DoneList extends PureComponent {
   render() {
+    console.log("DoneList Component");
     return (
       <div className="donelist_container">
         <h3>done: {this.props.tasks}</h3>

@@ -27,7 +27,6 @@ class App extends Component {
     } else {
       alert("Please Write Task");
     }
-    console.log(event);
   };
 
   onDeleteClickHandler = (event, index) => {
@@ -59,22 +58,23 @@ class App extends Component {
           <div className="todo_container">
             <AddItem
               value={this.state.value}
-              onClick={(event) => this.onAddClickHandler(event)}
-              onChange={(event) => this.onChangeHandler(event)}
+              onClick={this.onAddClickHandler}
+              onChange={this.onChangeHandler}
             />
             {this.state.tasksTodo.map((task, index) => (
               <ToDoList
                 task={task.task}
                 key={index}
-                onDeleteClick={(event) => this.onDeleteClickHandler(event, index)}
-                onDoneCLick={(event) => this.onDoneClickHandler(event, index)}
+                onDeleteClick={this.onDeleteClickHandler}
+                onDoneCLick={this.onDoneClickHandler}
+                index={index}
               />
             ))}
           </div>
 
           <div className="done_container">
-            {this.state.tasksDone.map((task, index) => (
-              <DoneList key={index} tasks={task.task} />
+            {this.state.tasksDone.map((task) => (
+              <DoneList key={task.task} tasks={task.task} />
             ))}
           </div>
         </div>
