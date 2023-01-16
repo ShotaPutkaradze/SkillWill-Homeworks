@@ -1,10 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import "./AddItem.css";
 
 function AddItem(props) {
   const { value, onChange, onClick } = props;
   return (
     <React.StrictMode>
+      {console.log(1)}
       <form className="form">
         <textarea
           type="text"
@@ -22,4 +23,4 @@ function AddItem(props) {
   );
 }
 
-export default AddItem;
+export default memo(AddItem);

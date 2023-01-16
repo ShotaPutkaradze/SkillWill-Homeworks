@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
-
 import AddItem from "./components/Additem";
 import TodoList from "./components/TodoList";
 import DoneList from "./components/DoneList";
@@ -14,17 +13,34 @@ function App() {
     setValue(event.target.value);
   };
 
-  const onAddClickHandler = (event) => {
-    event.preventDefault();
-    if (value) {
-      const tmpArr = [...tasksTodo];
-      tmpArr.push(value);
-      setTasksTodo(tmpArr);
-      setValue("");
-    } else {
-      alert("Please Write Task");
-    }
-  };
+  const onAddClickHandler = useCallback(
+    (event) => {
+      event.preventDefault();
+      setTasksTodo((value) => {
+        if (value) {
+          const tmpArr = [...tasksTodo];
+          tmpArr.push(value);
+          setValue("");
+          return [...tmpArr];
+        } else {
+          alert("Please Write Task");
+        }
+      });
+    },
+    [tasksTodo]
+  );
+
+  // const onAddClickHandler = (event) => {
+  //   event.preventDefault();
+  //   if (value) {
+  //     const tmpArr = [...tasksTodo];
+  //     tmpArr.push(value);
+  //     setTasksTodo(tmpArr);
+  //     setValue("");
+  //   } else {
+  //     alert("Please Write Task");
+  //   }
+  // };
 
   const onDeleteClickHandler = (event, index) => {
     event.preventDefault();
