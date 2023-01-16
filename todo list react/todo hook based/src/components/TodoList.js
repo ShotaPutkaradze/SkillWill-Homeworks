@@ -1,10 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import "./TodoList.css";
 
 function TodoList(props) {
   const { task, onDeleteClick, onDoneCLick, index } = props;
   return (
     <React.StrictMode>
+      {console.log(3)}
       <div className="todo_form">
         <h4 className="h4">{task}</h4>
         <div className="buttons_div">
@@ -28,4 +29,4 @@ function TodoList(props) {
   );
 }
 
-export default TodoList;
+export default memo(TodoList);
