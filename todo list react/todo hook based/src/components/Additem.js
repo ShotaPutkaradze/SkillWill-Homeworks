@@ -5,7 +5,6 @@ function AddItem(props) {
   const { value, onChange, onClick } = props;
   return (
     <React.StrictMode>
-      {console.log(1)}
       <form className="form">
         <textarea
           type="text"

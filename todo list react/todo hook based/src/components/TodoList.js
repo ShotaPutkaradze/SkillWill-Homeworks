@@ -5,7 +5,6 @@ function TodoList(props) {
   const { task, onDeleteClick, onDoneCLick, index } = props;
   return (
     <React.StrictMode>
-      {console.log(3)}
       <div className="todo_form">
         <h4 className="h4">{task}</h4>
         <div className="buttons_div">
