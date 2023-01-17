@@ -16,37 +16,39 @@ function App() {
   const onAddClickHandler = useCallback(
     (event) => {
       event.preventDefault();
-      
-      setTasksTodo((value) => {
-          if (value) {
-            const tmpArr = [...tasksTodo];
-            tmpArr.push(value);
-            setValue("");
-            return [...tmpArr];
-          } else {
-            alert("Please Write Task");
-          }
-        }),
-      
+      setTasksTodo((currentArr) => {
+        const tmpArr = [...currentArr];
+        tmpArr.push(value);
+        setValue("");
+        return [...tmpArr];
+      });
+    },
+    [value]
+  );
+
+  const onDeleteClickHandler = useCallback(
+    (event, index) => {
+      event.preventDefault();
+      setTasksTodo(() => {
+        const tmpArr = [...tasksTodo];
+        tmpArr.splice(index, 1);
+        return [...tmpArr];
+      });
     },
     [tasksTodo]
   );
 
-  const onDeleteClickHandler = (event, index) => {
-    event.preventDefault();
-    const tmpArr = [...tasksTodo];
-    tmpArr.splice(index, 1);
-    setTasksTodo(tmpArr);
-  };
-
-  const onDoneClickHandler = (event, index) => {
-    event.preventDefault();
-    const tmpTodo = [...tasksTodo];
-    const tmpDone = [...tasksDone];
-    tmpDone.unshift(tmpTodo.splice(index, 1)[0]);
-    setTasksTodo([...tmpTodo]);
-    setTasksDone([...tmpDone]);
-  };
+  const onDoneClickHandler = useCallback(
+    (event, index) => {
+      event.preventDefault();
+      const tmpTodo = [...tasksTodo];
+      const tmpDone = [...tasksDone];
+      tmpDone.unshift(tmpTodo.splice(index, 1)[0]);
+      setTasksDone(() => [...tmpDone]);
+      setTasksTodo(() => [...tmpTodo]);
+    },
+    [tasksTodo, tasksDone]
+  );
 
   return (
     <React.StrictMode>
