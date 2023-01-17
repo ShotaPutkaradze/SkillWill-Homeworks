@@ -16,31 +16,21 @@ function App() {
   const onAddClickHandler = useCallback(
     (event) => {
       event.preventDefault();
+      
       setTasksTodo((value) => {
-        if (value) {
-          const tmpArr = [...tasksTodo];
-          tmpArr.push(value);
-          setValue("");
-          return [...tmpArr];
-        } else {
-          alert("Please Write Task");
-        }
-      });
+          if (value) {
+            const tmpArr = [...tasksTodo];
+            tmpArr.push(value);
+            setValue("");
+            return [...tmpArr];
+          } else {
+            alert("Please Write Task");
+          }
+        }),
+      
     },
     [tasksTodo]
   );
-
-  // const onAddClickHandler = (event) => {
-  //   event.preventDefault();
-  //   if (value) {
-  //     const tmpArr = [...tasksTodo];
-  //     tmpArr.push(value);
-  //     setTasksTodo(tmpArr);
-  //     setValue("");
-  //   } else {
-  //     alert("Please Write Task");
-  //   }
-  // };
 
   const onDeleteClickHandler = (event, index) => {
     event.preventDefault();
