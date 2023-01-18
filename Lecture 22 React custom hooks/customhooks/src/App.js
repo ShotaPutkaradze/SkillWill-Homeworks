@@ -1,17 +1,13 @@
 import "./App.css";
-import React, { useState } from "react";
 import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
-  const onClickHandler = () => {
-    setDark((dark) => !dark);
-  };
+  const [dark, setDark] = useLocalStorage("isDark:", false);
 
-  const [dark, setDark] = useLocalStorage("dark", false);
-
+  console.log(dark);
   return (
-    <div style={{ backgroundColor: dark ? "black" : "white" }} className="App">
-      <button onClick={onClickHandler}>Toggle Theme</button>
+    <div className={dark ? "dark" : "white"}>
+      <button onClick={() => setDark(!dark)}>Toggle Theme</button>
     </div>
   );
 }

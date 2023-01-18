@@ -5,7 +5,7 @@ const useLocalStorage = (storageKey, fallback) => {
 
   useEffect(() => {
     localStorage.setItem(storageKey, value);
-  }, [storageKey, value]);
+  }, [value, storageKey]);
 
   return [value, setValue];
 };
