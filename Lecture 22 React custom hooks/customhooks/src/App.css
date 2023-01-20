@@ -4,10 +4,13 @@
 }
 
 div {
-  height: 200px;
+  height: 800px;
   text-align: center;
 }
 
+button {
+  padding: 30px;
+}
 .dark {
   background-color: #222;
 }
