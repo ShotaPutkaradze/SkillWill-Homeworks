@@ -2,9 +2,8 @@ import "./App.css";
 import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
-  const [dark, setDark] = useLocalStorage("isDark:", true);
+  const [dark, setDark] = useLocalStorage("Dark:", false);
 
-  console.log(dark);
   return (
     <div style={{ backgroundColor: dark ? "#222" : "white" }}>
       <button onClick={() => setDark(!dark)}>Toggle Theme</button>
