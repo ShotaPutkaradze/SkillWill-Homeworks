@@ -1,25 +1,29 @@
 import React, { memo } from "react";
-import "./AddItem.css";
+import styles from "./AddTask.module.css";
 
-function AddItem(props) {
+function AddTask(props) {
   const { value, onChange, onClick } = props;
   return (
     <React.StrictMode>
-      <form className="form">
+      <div className={styles.addtask_container}>
         <textarea
           type="text"
-          className="task_textarea"
+          className={styles.textarea}
           placeholder="Write Your Task..."
           value={value}
           onChange={(event) => onChange(event)}
         ></textarea>
 
-        <button type="submit" className="button" onClick={(event) => onClick(event)}>
-          add
+        <button
+          type="submit"
+          className={styles.button}
+          onClick={(event) => onClick(event)}
+        >
+          Add
         </button>
-      </form>
+      </div>
     </React.StrictMode>
   );
 }
 
-export default memo(AddItem);
+export default memo(AddTask);
