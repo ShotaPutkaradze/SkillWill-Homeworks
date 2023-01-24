@@ -13,7 +13,7 @@ function Backlog(props) {
       <div
         className={styles.main_container}
         style={{
-          border: `1px solid #${setColor()}`,
+          border: `2px solid #${setColor()}`,
         }}
       >
         <h4>{task}</h4>
