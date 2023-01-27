@@ -1,19 +1,35 @@
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Facts from "./pages/Facts";
+import Wildcard from "./pages/Wildcard";
+import MainPage from "./layouts/MainPage";
 
 const routes = [
   {
-    element: <Home />,
     path: "/",
-  },
-  {
-    element: <About />,
-    path: "about-us",
-  },
-  {
-    element: <Facts />,
-    path: "facts",
+    element: <MainPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "about-us",
+        element: <About />,
+      },
+      {
+        path: "facts",
+        element: <Facts />,
+      },
+      {
+        path: "facts/:factId",
+        element: <Facts />,
+      },
+      {
+        path: "*",
+        element: <Wildcard />,
+      },
+    ],
   },
 ];
 export default routes;
