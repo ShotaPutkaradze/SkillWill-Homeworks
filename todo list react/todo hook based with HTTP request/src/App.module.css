@@ -1,0 +1,59 @@
+.app {
+  background-color: #f5f5f5;
+  height: 100vh;
+  width: 100%;
+}
+
+header {
+  font-size: 24px;
+}
+
+.addtask_container {
+  display: flex;
+  justify-content: center;
+  margin: 0 50px 50px 50px;
+  padding-top: 30px;
+}
+
+.tasks_container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 15px;
+}
+.backlog_container {
+  width: 30%;
+  padding: 10px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+}
+.inprogress_container {
+  width: 30%;
+  padding: 10px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+}
+.done_container {
+  width: 30%;
+  padding: 10px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.line_backlog {
+  height: 2px;
+  background-color: red;
+  border: none;
+}
+.line_inprogress {
+  height: 2px;
+  background-color: yellow;
+  border: none;
+}
+.line_done {
+  height: 2px;
+  background-color: green;
+  border: none;
+}
