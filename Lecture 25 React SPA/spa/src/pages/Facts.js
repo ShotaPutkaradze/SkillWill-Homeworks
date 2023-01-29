@@ -1,50 +1,42 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Div, H1 } from "../css/styles";
 
 const Facts = () => {
-  const factId = {
-    id1: "Philosopher's Stone (1997)",
-    id2: "Chamber of Secrets (1998)",
-    id3: "Prisoner of Azkaban (1999)",
-    id4: "Goblet of Fire (2000)",
-    id5: "Order of the Phoenix (2003)",
-    id6: "Half-Blood Prince (2005)",
-    id7: "Deathly Hallows (2007)",
-  };
+  const factId = [
+    { id: "id1", book: "Philosopher's Stone (1997)" },
+    { id: "id2", book: "Chamber of Secrets (1998)" },
+    { id: "id3", book: "Prisoner of Azkaban (1999)" },
+    { id: "id4", book: "Goblet of Fire (2000)" },
+    { id: "id5", book: "Order of the Phoenix (2003)" },
+    { id: "id6", book: "Half-Blood Prince (2005)" },
+    { id: "id7", book: "Deathly Hallows (2007)" },
+  ];
 
-  const factString = factId[useParams().factId];
+  let dinamycURL = useParams().factId;
 
-  if (!factString)
-    return (
-      <div>
-        <H1>Fact Not Found </H1>
-        <H1>Please see all Facts: </H1>
-
+  for (let fact of factId) {
+    if (dinamycURL === fact.id) {
+      return (
         <Div>
-          <Link to="id1">Philosopher's Stone (1997)</Link>
-          <br></br>
-          <Link to="id2">Chamber of Secrets (1998)</Link>
-          <br></br>
-          <Link to="id3">Prisoner of Azkaban (1999)</Link>
-          <br></br>
-          <Link to="id4">Goblet of Fire (2000)</Link>
-          <br></br>
-          <Link to="id5">Order of the Phoenix (2003)</Link>
-          <br></br>
-          <Link to="id1">Half-Blood Prince (2005)</Link>
-          <br></br>
-          <Link to="id6">Deathly Hallows (2007)</Link>
-          <br></br>
-          <Link to="id7">"Philosopher's Stone (1997)"</Link>
-          <br></br>
+          <H1>
+            {fact.book}
+            <br></br>
+          </H1>
         </Div>
-      </div>
-    );
+      );
+    }
+  }
 
   return (
-    <div>
-      <H1>{factString}</H1>
-    </div>
+    <Div>
+      <H1>Please see all Facts: </H1>
+      {factId.map((fact) => (
+        <Div key={fact.id}>
+          <Link to={fact.id}>{fact.book}</Link>
+          <br></br>
+        </Div>
+      ))}
+    </Div>
   );
 };
 
