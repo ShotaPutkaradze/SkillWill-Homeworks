@@ -6,34 +6,49 @@ import InProgress from "./components/InProgress";
 import Done from "./components/Done.js";
 
 function App() {
-  const API_KEY = "P_ow9x2JA3poWQttDtMcjHos3qCVBfHHVDiPAt9oLIJZ9AxVq"; //g
+  const API_KEY = "P_ow9x2JA3poWQttDtMcjHos3qCVBfHHVDiPAt9oLIJZ9AxVqg";
 
-  const [value, setValue] = useState("");
   const [backlog, setBacklog] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [done, setDone] = useState([]);
 
-  const onChangeHandler = (event) => {
-    setValue(event.target.value);
+  const onTaskAddClickHandler = (value) => {
+    fetch("/api/v1/backlog", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+      },
+      body: JSON.stringify([{ value, isComplited: false }]),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("response error");
+        return response.json();
+      })
+      .then((data) => {
+        setBacklog((prev) => {
+          return [...prev, { task: data.items[0].value, id: data.items[0]._uuid }] || {};
+        });
+      })
+      .catch((error) => console.error(error));
   };
 
-  const onAddClickHandler = useCallback((event) => {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const inputTaskValue = Object.fromEntries(formData.entries());
-
-    if (inputTaskValue.task) {
-      setValue("");
-      setBacklog((currentArr) => {
-        const tmpArr = [...currentArr];
-        tmpArr.unshift(inputTaskValue.task);
-        inputTaskValue.task = "";
-        return [...tmpArr];
-      });
-    } else {
-      alert("please add some task");
-    }
+  useEffect(() => {
+    fetch("/api/v1/backlog", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("response error");
+        return response.json();
+      })
+      .then((data) => {
+        setBacklog(data.items.map((item) => ({ task: item.value, id: item._uuid })));
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   const onBacklogDeleteClickHandler = useCallback(
@@ -84,49 +99,25 @@ function App() {
     [inProgress, done]
   );
 
-  useEffect(() => {
-    fetch("/api/v1/backlog", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${API_KEY}`,
-      },
-      body: JSON.stringify([{ backlog }]),
-    })
-      .then((response) => {
-        // /if (!response.ok) throw new Error("response error");
-        console.log(response);
-        return response.JSON;
-      })
-      .then((data) => {
-        // console.log("data");
-      })
-      .catch((error) => console.error(error));
-  }, [onAddClickHandler, backlog]);
-
   return (
     <React.StrictMode>
       <div className={styles.app}>
         <div className={styles.addtask_container}>
-          <AddTask
-            onSubmit={onAddClickHandler}
-            onChange={onChangeHandler}
-            value={value}
-          />
+          <AddTask onSubmit={onTaskAddClickHandler} />
         </div>
 
         <div className={styles.tasks_container}>
           <div className={styles.backlog_container}>
             <header>Backlog | {backlog.length}</header>
             <hr className={styles.line_backlog} />
-            {backlog.map((task, index) => {
+            {backlog.map((task) => {
               return (
                 <Backlog
-                  task={task}
-                  key={index}
+                  task={task.task}
+                  key={task.id}
                   onDeleteClick={onBacklogDeleteClickHandler}
                   onStartCLick={onStartClickHandler}
-                  index={index}
+                  index={task.id}
                 />
               );
             })}

@@ -1,22 +1,27 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import styles from "./AddTask.module.css";
 
-function AddTask(props) {
-  const { value, onChange, onSubmit } = props;
+function AddTask({ onSubmit }) {
+  const [value, setValue] = useState("");
+
+  const onTaskAddClickHandler = (event) => {
+    event.preventDefault();
+    onSubmit(value);
+    setValue("");
+  };
 
   return (
     <React.StrictMode>
-      <form className={styles.addtask_container} onSubmit={onSubmit}>
+      <form className={styles.addtask_container} onSubmit={onTaskAddClickHandler}>
         <input
           name="task"
-          type="text"
-          className={styles.textarea}
-          placeholder="Write Your Task..."
           value={value}
-          onChange={(event) => onChange(event)}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder="Write Your Task..."
+          className={styles.textarea}
         ></input>
 
-        <button type="submit" className={styles.button}>
+        <button type="Submit" className={styles.button}>
           Add
         </button>
       </form>
