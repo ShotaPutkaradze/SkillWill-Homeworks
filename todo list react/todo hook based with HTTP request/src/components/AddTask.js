@@ -2,26 +2,24 @@ import React, { memo } from "react";
 import styles from "./AddTask.module.css";
 
 function AddTask(props) {
-  const { value, onChange, onClick } = props;
+  const { value, onChange, onSubmit } = props;
+
   return (
     <React.StrictMode>
-      <div className={styles.addtask_container}>
-        <textarea
+      <form className={styles.addtask_container} onSubmit={onSubmit}>
+        <input
+          name="task"
           type="text"
           className={styles.textarea}
           placeholder="Write Your Task..."
           value={value}
           onChange={(event) => onChange(event)}
-        ></textarea>
+        ></input>
 
-        <button
-          type="submit"
-          className={styles.button}
-          onClick={(event) => onClick(event)}
-        >
+        <button type="submit" className={styles.button}>
           Add
         </button>
-      </div>
+      </form>
     </React.StrictMode>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styles from "./App.module.css";
 import AddTask from "./components/AddTask";
 import Backlog from "./components/Backlog";
@@ -6,6 +6,8 @@ import InProgress from "./components/InProgress";
 import Done from "./components/Done.js";
 
 function App() {
+  const API_KEY = "P_ow9x2JA3poWQttDtMcjHos3qCVBfHHVDiPAt9oLIJZ9AxVq"; //g
+
   const [value, setValue] = useState("");
   const [backlog, setBacklog] = useState([]);
   const [inProgress, setInProgress] = useState([]);
@@ -15,22 +17,24 @@ function App() {
     setValue(event.target.value);
   };
 
-  const onAddClickHandler = useCallback(
-    (event) => {
-      event.preventDefault();
-      if (value) {
-        setBacklog((currentArr) => {
-          const tmpArr = [...currentArr];
-          tmpArr.unshift(value);
-          setValue("");
-          return [...tmpArr];
-        });
-      } else {
-        alert("please add some task");
-      }
-    },
-    [value]
-  );
+  const onAddClickHandler = useCallback((event) => {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const inputTaskValue = Object.fromEntries(formData.entries());
+
+    if (inputTaskValue.task) {
+      setValue("");
+      setBacklog((currentArr) => {
+        const tmpArr = [...currentArr];
+        tmpArr.unshift(inputTaskValue.task);
+        inputTaskValue.task = "";
+        return [...tmpArr];
+      });
+    } else {
+      alert("please add some task");
+    }
+  }, []);
 
   const onBacklogDeleteClickHandler = useCallback(
     (event, index) => {
@@ -80,11 +84,35 @@ function App() {
     [inProgress, done]
   );
 
+  useEffect(() => {
+    fetch("/api/v1/backlog", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+      },
+      body: JSON.stringify([{ backlog }]),
+    })
+      .then((response) => {
+        // /if (!response.ok) throw new Error("response error");
+        console.log(response);
+        return response.JSON;
+      })
+      .then((data) => {
+        // console.log("data");
+      })
+      .catch((error) => console.error(error));
+  }, [onAddClickHandler, backlog]);
+
   return (
     <React.StrictMode>
       <div className={styles.app}>
         <div className={styles.addtask_container}>
-          <AddTask value={value} onClick={onAddClickHandler} onChange={onChangeHandler} />
+          <AddTask
+            onSubmit={onAddClickHandler}
+            onChange={onChangeHandler}
+            value={value}
+          />
         </div>
 
         <div className={styles.tasks_container}>
