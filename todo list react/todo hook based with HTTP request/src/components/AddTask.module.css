@@ -1,14 +1,16 @@
 .addtask_container {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  align-items: center;
 }
-.textarea {
-  height: 80px;
+.input {
+  height: 100px;
+  width: 70%;
   margin-bottom: 5px;
 }
 .button {
   height: 50px;
+  width: 70%;
   font-size: 24px;
   background-color: darkgray;
   color: whitesmoke;

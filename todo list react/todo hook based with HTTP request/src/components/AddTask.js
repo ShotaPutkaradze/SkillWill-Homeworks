@@ -1,13 +1,16 @@
-import React, { memo, useState } from "react";
+import React, { memo, useRef } from "react";
 import styles from "./AddTask.module.css";
 
 function AddTask({ onSubmit }) {
-  const [value, setValue] = useState("");
+  const taskValueRef = useRef();
 
   const onTaskAddClickHandler = (event) => {
     event.preventDefault();
-    onSubmit(value);
-    setValue("");
+    if (taskValueRef.current) {
+      onSubmit(taskValueRef.current.value);
+    } else {
+      console.log("some ValueRef was not find");
+    }
   };
 
   return (
@@ -15,10 +18,9 @@ function AddTask({ onSubmit }) {
       <form className={styles.addtask_container} onSubmit={onTaskAddClickHandler}>
         <input
           name="task"
-          value={value}
-          onChange={(event) => setValue(event.target.value)}
+          ref={taskValueRef}
           placeholder="Write Your Task..."
-          className={styles.textarea}
+          className={styles.input}
         ></input>
 
         <button type="Submit" className={styles.button}>
