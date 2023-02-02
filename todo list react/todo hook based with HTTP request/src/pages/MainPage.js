@@ -1,9 +1,10 @@
 import styles from "./MainPage.module.css";
-import useGetMethod from "../hooks/useGetMethod";
+import useFetchData from "../hooks/useFetchData";
+import useSendRequest from "../hooks/useSendRequest";
 import Backlog from "../components/Backlog";
 
 const MainPage = () => {
-  const { responseData } = useGetMethod({
+  const { responseData, resendRequest } = useFetchData({
     url: "/api/v1/backlog",
     method: "GET",
   });
@@ -14,6 +15,20 @@ const MainPage = () => {
       id: item._uuid,
     })) || [];
 
+  const { sendRequest } = useSendRequest({
+    method: "DELETE",
+  });
+
+  const deleteTask = (id) => {
+    sendRequest(null, `/api/v1/backlog/${id}`)
+      .then(() => {
+        resendRequest();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className={styles.app}>
       <div className={styles.tasks_container}>
@@ -21,7 +36,14 @@ const MainPage = () => {
           <header>Backlog | {backlog.length}</header>
           <hr className={styles.line_backlog} />
           {backlog.map((task) => {
-            return <Backlog task={task.task} key={task.id} />;
+            return (
+              <Backlog
+                deleteTask={deleteTask}
+                task={task.task}
+                id={task.id}
+                key={task.id}
+              />
+            );
           })}
         </div>
       </div>

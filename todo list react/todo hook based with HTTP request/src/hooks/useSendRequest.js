@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { API_KEY } from "../config";
 
-const usePostMethod = ({ url, method }) => {
+const useSendRequest = ({ url, method }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const sendRequest = async (body) => {
+  const sendRequest = async (body, rewriteRequestUrl) => {
     setIsLoading(true);
-    const response = await fetch(url, {
+    const response = await fetch(rewriteRequestUrl || url, {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -23,4 +23,4 @@ const usePostMethod = ({ url, method }) => {
   return { sendRequest, isLoading };
 };
 
-export default usePostMethod;
+export default useSendRequest;

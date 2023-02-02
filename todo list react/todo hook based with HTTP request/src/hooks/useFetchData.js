@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { API_KEY } from "../config";
 
-const useGetMethod = ({ url, method }) => {
+const useFetchData = ({ url, method }) => {
   const [responseData, setResponseData] = useState(null);
   const [responseError, setResponseError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+  const sendRequest = useCallback(() => {
     setIsLoading(true);
 
     fetch(url, {
@@ -29,8 +29,17 @@ const useGetMethod = ({ url, method }) => {
       .finally(() => {
         setIsLoading(false);
       });
+    return () => {
+      setResponseData(null);
+      setResponseError(null);
+      setIsLoading(false);
+    };
   }, [url, method]);
-  return { responseData, responseError, isLoading };
+
+  useEffect(() => {
+    sendRequest();
+  }, [sendRequest]);
+  return { responseData, responseError, isLoading, resendRequest: sendRequest };
 };
 
-export default useGetMethod;
+export default useFetchData;
