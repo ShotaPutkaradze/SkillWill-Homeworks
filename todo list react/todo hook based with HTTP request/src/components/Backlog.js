@@ -13,7 +13,7 @@ function Backlog(props) {
       <div
         className={styles.main_container}
         style={{
-          border: `2px solid #${setColor()}`,
+          borderColor: `#${setColor()}`,
         }}
       >
         <h4>{task}</h4>
@@ -24,6 +24,13 @@ function Backlog(props) {
             onClick={(event) => onDeleteClick(event, index)}
           >
             Delete
+          </button>
+          <button
+            type="submit"
+            className={styles.button}
+            onClick={(event) => onStartCLick(event, index)}
+          >
+            Edit
           </button>
           <button
             type="submit"

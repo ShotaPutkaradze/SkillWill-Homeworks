@@ -1,9 +1,9 @@
-import styles from "../App.module.css";
-import useFetchData from "../hooks/useFetchData";
+import styles from "./MainPage.module.css";
+import useGetMethod from "../hooks/useGetMethod";
 import Backlog from "../components/Backlog";
 
 const MainPage = () => {
-  const { responseData } = useFetchData({
+  const { responseData } = useGetMethod({
     url: "/api/v1/backlog",
     method: "GET",
   });

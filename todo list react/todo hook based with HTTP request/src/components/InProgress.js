@@ -12,7 +12,7 @@ function InProgress(props) {
       <div
         className={styles.main_container}
         style={{
-          border: `2px solid #${setColor()}`,
+          borderColor: `#${setColor()}`,
         }}
       >
         <h4>{task}</h4>

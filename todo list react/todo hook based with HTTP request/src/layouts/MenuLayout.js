@@ -5,8 +5,12 @@ const MainPage = () => {
   return (
     <div className={styles.menu_counteiner}>
       <header className={styles.header}>
-        <Link to="/">ALL TASKS</Link>
-        <Link to="addtask">ADD A TASK</Link>
+        <Link className={styles.link} to="/">
+          ALL TASKS
+        </Link>
+        <Link className={styles.link} to="addtask">
+          ADD NEW TASK
+        </Link>
       </header>
 
       <Outlet />

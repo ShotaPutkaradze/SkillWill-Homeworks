@@ -8,5 +8,8 @@
   align-items: center;
   justify-content: space-evenly;
   font-size: 24px;
-  height: 150px;
+  height: 110px;
+}
+.link {
+  text-decoration: none;
 }

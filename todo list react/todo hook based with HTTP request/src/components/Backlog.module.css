@@ -2,7 +2,8 @@
   padding: 5px 15px;
   margin: 10px;
   border-radius: 10px;
-  border-right: 3px;
+  border-style: solid;
+  border-width: 2px 2px 2px 6px;
 }
 .buttons_container {
   width: 100%;
@@ -10,9 +11,11 @@
   justify-content: space-between;
 }
 .button {
-  width: 100%;
+  width: 30%;
   height: 30px;
   font-size: 16px;
-  background-color: darkgray;
+  background-color: gray;
   color: whitesmoke;
+  border: none;
+  border-radius: 10px;
 }

@@ -1,14 +1,19 @@
-import AddTask from "./components/AddTask";
+import AddTask from "./pages/AddTask";
+import MainPage from "./pages/MainPage";
 import MenuLayout from "./layouts/MenuLayout";
 
 const routes = [
   {
-    element: <MenuLayout />,
     path: "/",
+    element: <MenuLayout />,
     children: [
       {
-        element: <AddTask />,
+        path: "/",
+        element: <MainPage />,
+      },
+      {
         path: "/addtask",
+        element: <AddTask />,
       },
     ],
   },
