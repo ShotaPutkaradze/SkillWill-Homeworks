@@ -1,4 +1,4 @@
-import AddTask from "./pages/AddTask";
+import AddTaskPage from "./pages/AddTaskPage";
 import MainPage from "./pages/MainPage";
 import MenuLayout from "./layouts/MenuLayout";
 
@@ -13,7 +13,7 @@ const routes = [
       },
       {
         path: "/addtask",
-        element: <AddTask />,
+        element: <AddTaskPage />,
       },
     ],
   },

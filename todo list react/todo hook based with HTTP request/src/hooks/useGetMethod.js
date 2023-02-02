@@ -22,11 +22,9 @@ const useGetMethod = ({ url, method }) => {
       })
       .then((data) => {
         setResponseData(data);
-        console.log(data);
       })
       .catch((error) => {
         setResponseError(error);
-        console.log(error);
       })
       .finally(() => {
         setIsLoading(false);
