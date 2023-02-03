@@ -3,7 +3,7 @@ import React, { memo } from "react";
 import styles from "./Backlog.module.css";
 
 function Backlog(props) {
-  const { task, deleteTask, id } = props;
+  const { task, deleteTask, editTask, startTask, id } = props;
 
   const setColor = () => {
     return Math.floor(Math.random() * 16777215).toString(16);
@@ -12,6 +12,14 @@ function Backlog(props) {
   const onDeleteClick = (event) => {
     event.preventDefault();
     deleteTask(id);
+  };
+  const onEditClick = (event) => {
+    event.preventDefault();
+    editTask(id);
+  };
+  const onStartClick = (event) => {
+    event.preventDefault();
+    startTask(id, task);
   };
 
   return (
@@ -27,12 +35,12 @@ function Backlog(props) {
           <button className={styles.button} onClick={(event) => onDeleteClick(event)}>
             Delete
           </button>
-          {/* <button className={styles.button} onClick={(event) => onStartCLick(event)}>
+          <button className={styles.button} onClick={(event) => onEditClick(event)}>
             Edit
           </button>
-          <button className={styles.button} onClick={(event) => onStartCLick(event)}>
+          <button className={styles.button} onClick={(event) => onStartClick(event)}>
             Start
-          </button> */}
+          </button>
         </div>
       </div>
     </React.StrictMode>

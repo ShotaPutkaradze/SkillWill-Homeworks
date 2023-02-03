@@ -11,9 +11,11 @@
   justify-content: space-between;
 }
 .button {
-  width: 100%;
+  width: 30%;
   height: 30px;
   font-size: 16px;
-  background-color: darkgray;
+  background-color: gray;
   color: whitesmoke;
+  border: none;
+  border-radius: 10px;
 }

@@ -1,15 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import AddTask from "../components/AddTask";
-import useSendRequest from "../hooks/useSendRequest";
+import useAddTask from "../hooks/useAddTask";
 
 const AddTaskPage = () => {
   const navigate = useNavigate();
-  const { sendRequest, isLoading } = useSendRequest({
-    url: "/api/v1/backlog",
-    method: "POST",
-  });
-  console.log(isLoading);
+
+  const { sendRequest, isLoading } = useAddTask("backlog");
 
   const onFormSubmit = (value) => {
     sendRequest([{ value, isComplited: false }])
