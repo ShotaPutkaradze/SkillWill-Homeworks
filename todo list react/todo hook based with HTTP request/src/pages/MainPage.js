@@ -26,33 +26,34 @@ const MainPage = () => {
     })) || [];
 
   // Delete Task from backlog
-  const { sendRequest } = useSendRequest({
+  const { sendRequest: backlogSendRequest } = useSendRequest({
     method: "DELETE",
   });
 
-  const deleteTask = (id) => {
-    sendRequest(null, `/api/v1/backlog/${id}`)
+  const deleteBacklogTask = (id) => {
+    backlogSendRequest(null, `/api/v1/backlog/${id}`)
       .then(() => {
-        backlogResendRequest();
+        backlogResendRequest(); //rerender Backlog
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const editTask = () => {};
+  // Edit Task from backlog
+  const editBacklogTask = () => {};
 
+  // Start Task from backlog
   const { sendRequest: inProgressSendRequest } = useAddTask("inProgress");
-
-  const startTask = (id, value) => {
+  const startBacklogTask = (id, value) => {
     inProgressSendRequest([{ value, isComplited: false }])
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        inProgressResendRequest(); //rerender inProgress
       })
       .catch((error) => {
         console.log(error);
       });
-    deleteTask(id);
+    deleteBacklogTask(id); //delete started task from backlog
   };
 
   // Get inProgress data from API -------------------------------------------------------
@@ -71,6 +72,17 @@ const MainPage = () => {
       task: item.value,
       id: item._uuid,
     })) || [];
+
+  // done InProgress task
+  const doneInProgressTask = (id, value) => {
+    inProgressSendRequest([{ value, isComplited: true }])
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   // Get Done data from API -------------------------------------------------------------
   const {
@@ -99,9 +111,9 @@ const MainPage = () => {
           {backlog.map((task) => {
             return (
               <Backlog
-                deleteTask={deleteTask}
-                editTask={editTask}
-                startTask={startTask}
+                deleteTask={deleteBacklogTask}
+                editTask={editBacklogTask}
+                startTask={startBacklogTask}
                 task={task.task}
                 id={task.id}
                 key={task.id}
@@ -118,9 +130,8 @@ const MainPage = () => {
               <InProgress
                 task={task.task}
                 key={task.id}
-                index={task.id}
-                // onDeleteClick={onInProgressDeleteClickHandler}
-                // onDoneClock={onDoneClickHandler}
+                id={task.id}
+                doneTask={doneInProgressTask}
               />
             );
           })}
