@@ -1,8 +1,8 @@
 import React, { memo, useRef } from "react";
-import styles from "./AddTask.module.css";
+import styles from "./EditTask.module.css";
 
-const AddTask = ({ onFormSubmit }) => {
-  const taskValueRef = useRef(null);
+const EditTask = ({ onFormSubmit, task }) => {
+  const taskValueRef = useRef();
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -15,8 +15,9 @@ const AddTask = ({ onFormSubmit }) => {
 
   return (
     <form onSubmit={(event) => onSubmit(event)} className={styles.addtask_container}>
+      <h2>{`edit task:  "${task}"`}</h2>
       <input
-        name="task"
+        name="Edit task"
         ref={taskValueRef}
         placeholder="Write Your Task..."
         className={styles.input}
@@ -27,4 +28,4 @@ const AddTask = ({ onFormSubmit }) => {
   );
 };
 
-export default memo(AddTask);
+export default memo(EditTask);

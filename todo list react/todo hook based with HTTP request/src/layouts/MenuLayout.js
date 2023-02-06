@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
+import React, { memo } from "react";
 import styles from "./MenuLayout.module.css";
 
 const MainPage = () => {
@@ -18,4 +19,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default memo(MainPage);

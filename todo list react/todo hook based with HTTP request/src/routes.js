@@ -1,6 +1,7 @@
 import AddTaskPage from "./pages/AddTaskPage";
 import MainPage from "./pages/MainPage";
 import MenuLayout from "./layouts/MenuLayout";
+import EditTaskPage from "./pages/EditTaskPage";
 
 const routes = [
   {
@@ -14,6 +15,10 @@ const routes = [
       {
         path: "/addtask",
         element: <AddTaskPage />,
+      },
+      {
+        path: "/edittask/:taskId",
+        element: <EditTaskPage />,
       },
     ],
   },

@@ -5,8 +5,12 @@ import Backlog from "../components/Backlog";
 import InProgress from "../components/InProgress";
 import Done from "../components/Done";
 import useAddTask from "../hooks/useAddTask";
+import { useNavigate } from "react-router-dom";
+import React, { memo } from "react";
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   //  backlog data from API ---------------------------------------------------------
   //  GET backlog data
   const {
@@ -26,20 +30,22 @@ const MainPage = () => {
     })) || [];
 
   // Edit Task from backlog
-  const editBacklogTask = () => {};
+  const editBacklogTask = (id, value) => {
+    navigate(`/edittask/${id}`);
+  };
 
   // Delete Task from backlog
   const { sendRequest: backlogSendRequest } = useSendRequest({
     method: "DELETE",
   });
-  const { sendPostRequest: inProgressSendRequest } = useAddTask("inProgress");
 
   // Start Task from backlog
+  const { sendPostRequest: inProgressSendPostRequest } = useAddTask("inProgress");
   const startBacklogTask = (id, value) => {
-    inProgressSendRequest([{ value, isComplited: false }])
+    inProgressSendPostRequest([{ value, isComplited: false }])
       .then((data) => {
-        inProgressResendRequest();
-        console.log(data); //rerender inProgress
+        inProgressResendRequest(); //rerender inProgress
+        console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -56,6 +62,7 @@ const MainPage = () => {
         console.log(error);
       });
   };
+
   // Get inProgress data from API -------------------------------------------------------
   const {
     responseData: inProgressResponseData,
@@ -74,33 +81,31 @@ const MainPage = () => {
     })) || [];
 
   // done InProgress task
-  const { sendPostRequest: doneSendPostRequest, isLoading } = useAddTask("done");
-
+  const { sendPostRequest: doneSendPostRequest } = useAddTask("done");
   const doneInProgressTask = (id, value) => {
     doneSendPostRequest([{ value, isComplited: true }])
       .then(() => {
-        doneResendRequest(); //rerender inProgress
+        doneResendRequest(); //rerender done
       })
       .catch((error) => {
         console.log(error);
       });
-    //deleteInProgressTask(id); //delete started task from backlog
+    deleteInProgressTask(id); //delete started task from InProgress
   };
 
-  // // Delete Task from backlog
-  // const { sendRequest: inProgressSendRequest } = useSendRequest({
-  //   method: "DELETE",
-  // });
-
-  // const deleteInProgressTask = (id) => {
-  //   inProgressSendRequest(null, `/api/v1/backlog/${id}`)
-  //     .then(() => {
-  //       backlogResendRequest(); //rerender Backlog
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  // Delete Task from backlog
+  const { sendRequest: inProgressSendRequest } = useSendRequest({
+    method: "DELETE",
+  });
+  const deleteInProgressTask = (id) => {
+    inProgressSendRequest(null, `/api/v1/inProgress/${id}`)
+      .then(() => {
+        inProgressResendRequest(); //rerender InProgress
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   // Get Done data from API -------------------------------------------------------------
 
@@ -121,6 +126,11 @@ const MainPage = () => {
     })) || [];
 
   //jsx -------------------------------------------------------------------------------
+  if (backlogIsLoading || inProgressIsLoading || doneIsLoading)
+    return <p className={styles.p}>Loading...</p>;
+  if (backlogResponseError || inProgressResponseError || doneResponseError)
+    return <p className={styles.p}>Something was wrong...</p>;
+
   return (
     <div className={styles.app}>
       <div className={styles.tasks_container}>
@@ -151,6 +161,7 @@ const MainPage = () => {
                 key={task.id}
                 id={task.id}
                 doneTask={doneInProgressTask}
+                deleteTask={deleteInProgressTask}
               />
             );
           })}
@@ -168,4 +179,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default memo(MainPage);

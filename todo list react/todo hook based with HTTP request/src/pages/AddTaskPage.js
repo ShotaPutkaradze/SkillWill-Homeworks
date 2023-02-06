@@ -1,7 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import AddTask from "../components/AddTask";
 import useAddTask from "../hooks/useAddTask";
+import styles from "./AddTaskPage.module.css";
 
 const AddTaskPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const AddTaskPage = () => {
         console.log(error);
       });
   };
-
+  if (isLoading) return <p className={styles.p}>Loading...</p>;
   return (
     <React.StrictMode>
       <AddTask onFormSubmit={onFormSubmit} />
@@ -25,4 +26,4 @@ const AddTaskPage = () => {
   );
 };
 
-export default AddTaskPage;
+export default memo(AddTaskPage);
