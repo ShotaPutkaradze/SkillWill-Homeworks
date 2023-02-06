@@ -25,37 +25,37 @@ const MainPage = () => {
       id: item._uuid,
     })) || [];
 
-  // edit Task from backlog
-  const editTask = () => {};
+  // Edit Task from backlog
+  const editBacklogTask = () => {};
 
   // Delete Task from backlog
-  const { sendRequest } = useSendRequest({
+  const { sendRequest: backlogSendRequest } = useSendRequest({
     method: "DELETE",
   });
+  const { sendPostRequest: inProgressSendRequest } = useAddTask("inProgress");
 
-  const { sendRequest: inProgressSendRequest } = useAddTask("inProgress");
-
-  const startTask = (id, value) => {
+  // Start Task from backlog
+  const startBacklogTask = (id, value) => {
     inProgressSendRequest([{ value, isComplited: false }])
       .then((data) => {
-        console.log(data);
+        inProgressResendRequest();
+        console.log(data); //rerender inProgress
       })
       .catch((error) => {
         console.log(error);
       });
-    deleteTask(id);
+    deleteBacklogTask(id); //delete started task from backlog
   };
 
-  const deleteTask = (id) => {
-    sendRequest(null, `/api/v1/backlog/${id}`)
+  const deleteBacklogTask = (id) => {
+    backlogSendRequest(null, `/api/v1/backlog/${id}`)
       .then(() => {
-        backlogResendRequest();
+        backlogResendRequest(); //rerender Backlog
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
   // Get inProgress data from API -------------------------------------------------------
   const {
     responseData: inProgressResponseData,
@@ -73,7 +73,37 @@ const MainPage = () => {
       id: item._uuid,
     })) || [];
 
+  // done InProgress task
+  const { sendPostRequest: doneSendPostRequest, isLoading } = useAddTask("done");
+
+  const doneInProgressTask = (id, value) => {
+    doneSendPostRequest([{ value, isComplited: true }])
+      .then(() => {
+        doneResendRequest(); //rerender inProgress
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //deleteInProgressTask(id); //delete started task from backlog
+  };
+
+  // // Delete Task from backlog
+  // const { sendRequest: inProgressSendRequest } = useSendRequest({
+  //   method: "DELETE",
+  // });
+
+  // const deleteInProgressTask = (id) => {
+  //   inProgressSendRequest(null, `/api/v1/backlog/${id}`)
+  //     .then(() => {
+  //       backlogResendRequest(); //rerender Backlog
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
   // Get Done data from API -------------------------------------------------------------
+
   const {
     responseData: doneResponseData,
     resendRequest: doneResendRequest,
@@ -100,9 +130,9 @@ const MainPage = () => {
           {backlog.map((task) => {
             return (
               <Backlog
-                deleteTask={deleteTask}
-                editTask={editTask}
-                startTask={startTask}
+                deleteTask={deleteBacklogTask}
+                editTask={editBacklogTask}
+                startTask={startBacklogTask}
                 task={task.task}
                 id={task.id}
                 key={task.id}
@@ -119,9 +149,8 @@ const MainPage = () => {
               <InProgress
                 task={task.task}
                 key={task.id}
-                index={task.id}
-                // onDeleteClick={onInProgressDeleteClickHandler}
-                // onDoneClock={onDoneClickHandler}
+                id={task.id}
+                doneTask={doneInProgressTask}
               />
             );
           })}
@@ -130,8 +159,8 @@ const MainPage = () => {
         <div className={styles.done_container}>
           <header>Done | {done.length}</header>
           <hr className={styles.line_done} />
-          {done.map((task, index) => {
-            return <Done key={index} tasks={task} />;
+          {done.map((task) => {
+            return <Done key={task.id} id={task.id} tasks={task.task} />;
           })}
         </div>
       </div>

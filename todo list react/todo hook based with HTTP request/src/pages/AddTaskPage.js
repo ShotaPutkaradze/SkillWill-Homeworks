@@ -6,10 +6,10 @@ import useAddTask from "../hooks/useAddTask";
 const AddTaskPage = () => {
   const navigate = useNavigate();
 
-  const { sendRequest, isLoading } = useAddTask("backlog");
+  const { sendPostRequest, isLoading } = useAddTask("backlog");
 
   const onFormSubmit = (value) => {
-    sendRequest([{ value, isComplited: false }])
+    sendPostRequest([{ value, isComplited: false }])
       .then((data) => {
         navigate("/");
       })

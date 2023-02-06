@@ -2,9 +2,14 @@ import React, { memo } from "react";
 import styles from "./InProgress.module.css";
 
 function InProgress(props) {
-  const { task, onDeleteClick, onDoneClock, index } = props;
+  const { task, doneTask, id } = props;
   const setColor = () => {
     return Math.floor(Math.random() * 16777215).toString(16);
+  };
+
+  const onDoneClick = (event) => {
+    event.preventDefault();
+    doneTask(id, task);
   };
 
   return (
@@ -17,18 +22,7 @@ function InProgress(props) {
       >
         <h4>{task}</h4>
         <div className={styles.buttons_container}>
-          <button
-            type="submit"
-            className={styles.button}
-            onClick={(event) => onDeleteClick(event, index)}
-          >
-            Delete
-          </button>
-          <button
-            type="submit"
-            className={styles.button}
-            onClick={(event) => onDoneClock(event, index)}
-          >
+          <button className={styles.button} onClick={(event) => onDoneClick(event)}>
             Done
           </button>
         </div>
