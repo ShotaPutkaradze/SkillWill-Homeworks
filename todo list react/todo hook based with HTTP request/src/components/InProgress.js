@@ -9,7 +9,7 @@ function InProgress(props) {
 
   const onDoneClick = (event) => {
     event.preventDefault();
-    doneTask(id);
+    doneTask(id, task);
   };
 
   return (
