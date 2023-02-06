@@ -25,22 +25,13 @@ const MainPage = () => {
       id: item._uuid,
     })) || [];
 
+  // edit Task from backlog
+  const editTask = () => {};
+
   // Delete Task from backlog
   const { sendRequest } = useSendRequest({
     method: "DELETE",
   });
-
-  const deleteTask = (id) => {
-    sendRequest(null, `/api/v1/backlog/${id}`)
-      .then(() => {
-        backlogResendRequest();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const editTask = () => {};
 
   const { sendRequest: inProgressSendRequest } = useAddTask("inProgress");
 
@@ -53,6 +44,16 @@ const MainPage = () => {
         console.log(error);
       });
     deleteTask(id);
+  };
+
+  const deleteTask = (id) => {
+    sendRequest(null, `/api/v1/backlog/${id}`)
+      .then(() => {
+        backlogResendRequest();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // Get inProgress data from API -------------------------------------------------------
