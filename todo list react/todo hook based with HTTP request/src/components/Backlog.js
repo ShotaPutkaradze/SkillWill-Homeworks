@@ -5,10 +5,6 @@ import styles from "./Backlog.module.css";
 function Backlog(props) {
   const { task, deleteTask, editTask, startTask, id } = props;
 
-  const setColor = () => {
-    return Math.floor(Math.random() * 16777215).toString(16);
-  };
-
   const onDeleteClick = (event) => {
     event.preventDefault();
     deleteTask(id);
@@ -23,27 +19,20 @@ function Backlog(props) {
   };
 
   return (
-    <React.StrictMode>
-      <div
-        className={styles.main_container}
-        style={{
-          borderColor: `#${setColor()}`,
-        }}
-      >
-        <h4>{task}</h4>
-        <div className={styles.buttons_container}>
-          <button className={styles.button} onClick={(event) => onDeleteClick(event)}>
-            Delete
-          </button>
-          <button className={styles.button} onClick={(event) => onEditClick(event)}>
-            Edit
-          </button>
-          <button className={styles.button} onClick={(event) => onStartClick(event)}>
-            Start
-          </button>
-        </div>
+    <div className={styles.main_container}>
+      <h4>{task}</h4>
+      <div className={styles.buttons_container}>
+        <button className={styles.button} onClick={(event) => onDeleteClick(event)}>
+          Delete
+        </button>
+        <button className={styles.button} onClick={(event) => onEditClick(event)}>
+          Edit
+        </button>
+        <button className={styles.button} onClick={(event) => onStartClick(event)}>
+          Start
+        </button>
       </div>
-    </React.StrictMode>
+    </div>
   );
 }
 

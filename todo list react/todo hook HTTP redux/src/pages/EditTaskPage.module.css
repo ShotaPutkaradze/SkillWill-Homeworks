@@ -1,0 +1,9 @@
+.p {
+  text-decoration: none;
+  color: whitesmoke;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 32px;
+}

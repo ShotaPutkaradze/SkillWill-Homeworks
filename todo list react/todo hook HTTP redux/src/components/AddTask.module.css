@@ -1,0 +1,24 @@
+.addtask_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh - 115px;
+  background-color: white;
+  padding: 20px;
+}
+.input {
+  height: 100px;
+  width: 70%;
+  margin-bottom: 5px;
+  border: 2px solid greenyellow;
+  border-radius: 10px;
+}
+.button {
+  height: 50px;
+  width: 70%;
+  font-size: 24px;
+  background-color: gray;
+  color: whitesmoke;
+  border: none;
+  border-radius: 10px;
+}

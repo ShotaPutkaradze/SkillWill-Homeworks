@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import AddTask from "../components/AddTask";
 import useAddTask from "../hooks/useAddTask";
@@ -9,21 +9,21 @@ const AddTaskPage = () => {
 
   const { sendPostRequest, isLoading } = useAddTask("backlog");
 
-  const onFormSubmit = useCallback(
-    (value) => {
-      sendPostRequest([{ value, isComplited: false }])
-        .then(() => {
-          navigate("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    [navigate, sendPostRequest]
-  );
-
+  const onFormSubmit = (value) => {
+    sendPostRequest([{ value, isComplited: false }])
+      .then((data) => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   if (isLoading) return <p className={styles.p}>Loading...</p>;
-  return <AddTask onFormSubmit={onFormSubmit} />;
+  return (
+    <React.StrictMode>
+      <AddTask onFormSubmit={onFormSubmit} />
+    </React.StrictMode>
+  );
 };
 
 export default memo(AddTaskPage);

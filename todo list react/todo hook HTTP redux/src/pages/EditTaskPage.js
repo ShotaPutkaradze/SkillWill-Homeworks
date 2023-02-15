@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 import styles from "./EditTaskPage.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import EditTask from "../components/EditTask";
@@ -19,25 +19,26 @@ const EditTaskPage = () => {
     method: "PUT",
   });
 
-  const onFormSubmit = useCallback(
-    (value) => {
-      sendRequest({ value: value })
-        .then((data) => {
-          navigate("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    [navigate, sendRequest]
-  );
+  const onFormSubmit = (value) => {
+    sendRequest({ value: value })
+      .then((data) => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   if (isLoading || !responseData) return <p className={styles.p}>Loading...</p>;
 
   if (responseError || !responseData)
     return <p className={styles.p}>Something is wrong...</p>;
 
-  return <EditTask onFormSubmit={onFormSubmit} task={responseData.value} />;
+  return (
+    <React.StrictMode>
+      <EditTask onFormSubmit={onFormSubmit} task={responseData.value} />
+    </React.StrictMode>
+  );
 };
 
 export default memo(EditTaskPage);

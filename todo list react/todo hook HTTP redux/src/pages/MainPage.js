@@ -6,7 +6,7 @@ import InProgress from "../components/InProgress";
 import Done from "../components/Done";
 import useAddTask from "../hooks/useAddTask";
 import { useNavigate } from "react-router-dom";
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const MainPage = () => {
     })) || [];
 
   // Edit Task from backlog
-  const editBacklogTask = (id) => {
+  const editBacklogTask = (id, value) => {
     navigate(`/edittask/${id}`);
   };
 
@@ -41,7 +41,6 @@ const MainPage = () => {
 
   // Start Task from backlog
   const { sendPostRequest: inProgressSendPostRequest } = useAddTask("inProgress");
-  
   const startBacklogTask = (id, value) => {
     inProgressSendPostRequest([{ value, isComplited: false }])
       .then((data) => {
@@ -54,18 +53,15 @@ const MainPage = () => {
     deleteBacklogTask(id); //delete started task from backlog
   };
 
-  const deleteBacklogTask = useCallback(
-    (id) => {
-      backlogSendRequest(null, `/api/v1/backlog/${id}`)
-        .then(() => {
-          backlogResendRequest(); //rerender Backlog
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    [backlogSendRequest, backlogResendRequest]
-  );
+  const deleteBacklogTask = (id) => {
+    backlogSendRequest(null, `/api/v1/backlog/${id}`)
+      .then(() => {
+        backlogResendRequest(); //rerender Backlog
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   // Get inProgress data from API -------------------------------------------------------
   const {
@@ -112,6 +108,7 @@ const MainPage = () => {
   };
 
   // Get Done data from API -------------------------------------------------------------
+
   const {
     responseData: doneResponseData,
     resendRequest: doneResendRequest,
