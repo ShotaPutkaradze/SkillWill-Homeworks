@@ -1,45 +1,34 @@
-import React, { memo, useCallback } from "react";
+import React, { memo } from "react";
 import styles from "./InProgress.module.css";
 
 function InProgress(props) {
-  const { task, doneTask, deleteTask, id } = props;
-
-  const onDoneClick = useCallback(
-    (event) => {
-      event.preventDefault();
-      doneTask(id, task);
-    },
-    [doneTask, id, task]
-  );
-  const onDeleteClick = useCallback(
-    (event) => {
-      event.preventDefault();
-      deleteTask(id, task);
-    },
-    [deleteTask, id, task]
-  );
+  const { inProgressList, doneTask, deleteTask } = props;
 
   const setColor = () => {
     return Math.floor(Math.random() * 16777215).toString(16);
   };
-  return (
-    <div
-      className={styles.main_container}
-      style={{
-        border: `2px solid #${setColor()}`,
-      }}
-    >
-      <h4>{task}</h4>
-      <div className={styles.buttons_container}>
-        <button className={styles.button} onClick={(event) => onDoneClick(event)}>
-          Done
-        </button>
-        <button className={styles.button} onClick={(event) => onDeleteClick(event)}>
-          Delete
-        </button>
+
+  return inProgressList.map((task) => {
+    return (
+      <div
+        key={task.id}
+        className={styles.main_container}
+        style={{
+          border: `2px solid #${setColor()}`,
+        }}
+      >
+        <h4>{task.task}</h4>
+        <div className={styles.buttons_container}>
+          <button className={styles.button} onClick={() => doneTask(task.id, task.task)}>
+            Done
+          </button>
+          <button className={styles.button} onClick={() => deleteTask(task.id)}>
+            Delete
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  });
 }
 
 export default memo(InProgress);

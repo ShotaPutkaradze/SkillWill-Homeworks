@@ -166,38 +166,27 @@ const MainPage = () => {
           {backlogIsLoading ? (
             <h3>Loading...</h3>
           ) : (
-            backlog.map((task) => {
-              return (
-                <Backlog
-                  deleteTask={deleteBacklogTask}
-                  editTask={editBacklogTask}
-                  startTask={startBacklogTask}
-                  task={task.task}
-                  id={task.id}
-                  key={task.id}
-                />
-              );
-            })
+            <Backlog
+              backlogList={backlog}
+              deleteTask={deleteBacklogTask}
+              editTask={editBacklogTask}
+              startTask={startBacklogTask}
+            />
           )}
         </div>
 
         <div className={styles.inprogress_container}>
           <header>In Progress | {inProgress.length}</header>
           <hr className={styles.line_inprogress} />
+
           {inProgressIsLoading ? (
             <h3>Loading...</h3>
           ) : (
-            inProgress.map((task) => {
-              return (
-                <InProgress
-                  task={task.task}
-                  key={task.id}
-                  id={task.id}
-                  doneTask={doneInProgressTask}
-                  deleteTask={deleteInProgressTask}
-                />
-              );
-            })
+            <InProgress
+              inProgressList={inProgress}
+              doneTask={doneInProgressTask}
+              deleteTask={deleteInProgressTask}
+            />
           )}
         </div>
 
