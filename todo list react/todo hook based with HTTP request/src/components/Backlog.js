@@ -1,25 +1,44 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 
 import styles from "./Backlog.module.css";
 
 function Backlog(props) {
   const { task, deleteTask, editTask, startTask, id } = props;
 
-  const onDeleteClick = (event) => {
-    event.preventDefault();
-    deleteTask(id);
+  const onDeleteClick = useCallback(
+    (event) => {
+      event.preventDefault();
+      deleteTask(id);
+    },
+    [deleteTask, id]
+  );
+  const onEditClick = useCallback(
+    (event) => {
+      event.preventDefault();
+      editTask(id);
+    },
+    [editTask, id]
+  );
+  const onStartClick = useCallback(
+    (event) => {
+      event.preventDefault();
+      startTask(id, task);
+    },
+    [id, startTask, task]
+  );
+
+  const setColor = () => {
+    return Math.floor(Math.random() * 16777215).toString(16);
   };
-  const onEditClick = (event) => {
-    event.preventDefault();
-    editTask(id);
-  };
-  const onStartClick = (event) => {
-    event.preventDefault();
-    startTask(id, task);
-  };
+  console.log("backlog rendered");
 
   return (
-    <div className={styles.main_container}>
+    <div
+      className={styles.main_container}
+      style={{
+        border: `2px solid #${setColor()}`,
+      }}
+    >
       <h4>{task}</h4>
       <div className={styles.buttons_container}>
         <button className={styles.button} onClick={(event) => onDeleteClick(event)}>
