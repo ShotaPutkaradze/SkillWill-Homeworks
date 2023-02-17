@@ -39,6 +39,7 @@ const useFetchData = ({ url, method }) => {
   useEffect(() => {
     sendRequest();
   }, [sendRequest]);
+
   return { responseData, responseError, isLoading, resendRequest: sendRequest };
 };
 
