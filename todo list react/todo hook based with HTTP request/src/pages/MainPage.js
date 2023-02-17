@@ -41,7 +41,7 @@ const MainPage = () => {
 
   // Start Task from backlog
   const { sendPostRequest: inProgressSendPostRequest } = useAddTask("inProgress");
-  
+
   const startBacklogTask = (id, value) => {
     inProgressSendPostRequest([{ value, isComplited: false }])
       .then((data) => {
