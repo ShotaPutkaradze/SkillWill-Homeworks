@@ -74,18 +74,27 @@ const MainPage = () => {
   //   [deleteBacklogTask, inProgressResendRequest, inProgressSendPostRequest]
   // );
 
-  // const deleteInProgressTask = useCallback(
-  //   (id) => {
-  //     inProgressSendRequest(null, `/api/v1/inProgress/${id}`)
-  //       .then(() => {
-  //         inProgressResendRequest(); //rerender InProgress
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   },
-  //   [inProgressResendRequest, inProgressSendRequest]
-  // );
+<<<<<<< HEAD
+  // Start Task from backlog
+  const { sendPostRequest: inProgressSendPostRequest } = useAddTask("inProgress");
+
+  const startBacklogTask = (id, value) => {
+    inProgressSendPostRequest([{ value, isComplited: false }])
+      .then((data) => {
+        inProgressResendRequest(); //rerender inProgress
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    deleteBacklogTask(id); //delete started task from backlog
+  };
+=======
+  // Delete Task from InProgress
+  const { sendRequest: inProgressSendRequest } = useSendRequest({
+    method: "DELETE",
+  });
+>>>>>>> 57976fd62ac8a7a01a2e82261a88b7ef83cd6261
 
   // const doneInProgressTask = useCallback(
   //   (id, value) => {
