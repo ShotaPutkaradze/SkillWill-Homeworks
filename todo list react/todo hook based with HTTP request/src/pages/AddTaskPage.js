@@ -1,25 +1,28 @@
 import React, { memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import AddTask from "../components/AddTask";
-import useAddTask from "../hooks/useAddTask";
 import styles from "./AddTaskPage.module.css";
+import useSendRequest from "../hooks/useSendRequest";
 
 const AddTaskPage = () => {
   const navigate = useNavigate();
 
-  const { sendPostRequest, isLoading } = useAddTask("backlog");
+  const { sendRequest, isLoading } = useSendRequest({
+    method: "POST",
+  });
 
   const onFormSubmit = useCallback(
     (value) => {
-      sendPostRequest([{ value, isComplited: false }])
-        .then(() => {
+      sendRequest([{ value, list: "backlog", isComplited: false }])
+        .then((data) => {
+          console.log(data);
           navigate("/");
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    [navigate, sendPostRequest]
+    [navigate, sendRequest]
   );
 
   if (isLoading) return <p className={styles.p}>Loading...</p>;

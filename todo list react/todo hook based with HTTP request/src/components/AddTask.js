@@ -17,8 +17,8 @@ const AddTask = ({ onFormSubmit }) => {
     <form onSubmit={(event) => onSubmit(event)} className={styles.addtask_container}>
       <input
         name="task"
-        ref={taskValueRef}
         placeholder="Write Your Task..."
+        ref={taskValueRef}
         className={styles.input}
       ></input>
 
