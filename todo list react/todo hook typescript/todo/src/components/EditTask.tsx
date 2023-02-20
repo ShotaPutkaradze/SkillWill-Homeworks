@@ -1,4 +1,6 @@
-const EditTask = () => {
+import { FC } from "react";
+
+const EditTask: FC = () => {
   return <div></div>;
 };
 

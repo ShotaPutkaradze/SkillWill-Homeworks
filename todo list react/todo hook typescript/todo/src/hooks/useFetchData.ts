@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { API_KEY } from "../config";
 
-const useFetchData = ({ url, method }) => {
+const useFetchData: FC = ({ url, method }) => {
   const [responseData, setResponseData] = useState(null);
   const [responseError, setResponseError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

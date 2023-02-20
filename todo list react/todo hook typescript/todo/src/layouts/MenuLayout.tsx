@@ -1,7 +1,8 @@
+import { FC } from "react";
 import { Link, Outlet } from "react-router-dom";
 import styles from "./MenuLayout.module.css";
 
-const MenuLayout = () => {
+const MenuLayout: FC = () => {
   return (
     <div className={styles.menu_counteiner}>
       <header className={styles.header}>

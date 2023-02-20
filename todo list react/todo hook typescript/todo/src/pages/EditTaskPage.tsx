@@ -1,4 +1,6 @@
-const EditTaskPage = () => {
+import { FC } from "react";
+
+const EditTaskPage: FC = () => {
   return <div></div>;
 };
 

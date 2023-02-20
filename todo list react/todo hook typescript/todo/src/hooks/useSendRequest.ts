@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { API_KEY } from "../config";
 
-const useSendRequest = <object>({ ur: string, method: string }) => {
-  const [isLoading, setIsLoading] = useState(false);
+type Props = {
+  url: string;
+  method: string;
+};
 
-  const sendRequest = async (body, rewriteRequestUrl) => {
+export const useSendRequest: FC<Props> = ({ url, method }): any => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const sendRequest = async (body: string, rewriteRequestUrl: string): object => {
     setIsLoading(true);
     const response = await fetch(rewriteRequestUrl || url, {
       method,
@@ -12,15 +17,13 @@ const useSendRequest = <object>({ ur: string, method: string }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${API_KEY}`,
       },
-      body: method !== "GET" ? JSON.stringify(body) : undefined,
+      body: JSON.stringify(body),
     });
 
-    const data = await response.json();
+    const data: object = await response.json();
     setIsLoading(false);
 
     return data;
   };
   return { sendRequest, isLoading };
 };
-
-export default useSendRequest;

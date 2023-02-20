@@ -1,4 +1,6 @@
-const Done = () => {
+import { FC } from "react";
+
+const Done: FC = () => {
   return <div></div>;
 };
 

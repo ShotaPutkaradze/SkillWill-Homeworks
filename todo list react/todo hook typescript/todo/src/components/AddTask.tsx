@@ -1,4 +1,6 @@
-const AddTask = () => {
+import { FC } from "react";
+
+const AddTask: FC = () => {
   return <div></div>;
 };
 
